@@ -1,32 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Printing;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
+﻿
 using System.Numerics;
+using System.Text;
 
-namespace RSA_Algorythm
+namespace RSA_Algoryhtm_ConsoleRealise
 {
-    internal class RSA
+    internal class Program
     {
-        public int p, q, n, phi, e, d;
-
-        public RSA()
+        static void Main()
         {
-            p = GetRandomPrimeNumber();
-            q = GetRandomPrimeNumber();
-            n = p * q;
-            phi = (p - 1) * (q - 1);
-            e = GetEncryptionExponent(phi);
-            d = GetDecryptionExponent(e, phi);
+            // Generate two random prime numbers
+            int p = GetRandomPrimeNumber();
+            int q = GetRandomPrimeNumber();
+
+            // Calculate n and phi(n)
+            int n = p * q;
+            int phi = (p - 1) * (q - 1);
+
+            // Choose an encryption exponent e
+            int e = GetEncryptionExponent(phi);
+
+            // Calculate the decryption exponent d
+            int d = GetDecryptionExponent(e, phi);
+
+            // Print the public key (e, n) and private key (d, n)
+            Console.WriteLine("Public key: ({0}, {1})", e, n);
+            Console.WriteLine("Private key: ({0}, {1})", d, n);
+
+            // Encrypt a message using the public key
+            string message = "Ariskin";
+            int[] encryptedMessage = EncryptMessage(message, e, n);
+
+            // Decrypt the encrypted message using the private key
+            string decryptedMessage = DecryptMessage(encryptedMessage, d, n);
+
+            // Print the original and decrypted messages
+            Console.WriteLine("Original message: {0}", message);
+            Console.WriteLine("Decrypted message: {0}", decryptedMessage);
         }
 
         static int GetRandomPrimeNumber()
         {
-            // Генератор простых чисел
+            // This is a simple way to generate random prime numbers
             Random rand = new Random();
             int num = rand.Next(2, 100);
             while (!IsPrime(num))
@@ -54,6 +68,7 @@ namespace RSA_Algorythm
 
         static int GetEncryptionExponent(int phi)
         {
+            // Choose an encryption exponent e such that 1 < e < phi and e is coprime to phi
             Random rand = new Random();
             int e = rand.Next(2, phi);
             while (GCD(e, phi) != 1)
@@ -62,6 +77,7 @@ namespace RSA_Algorythm
             }
             return e;
         }
+
         static int GCD(int a, int b)
         {
             if (b == 0)
@@ -70,8 +86,10 @@ namespace RSA_Algorythm
             }
             return GCD(b, a % b);
         }
+
         static int GetDecryptionExponent(int e, int phi)
         {
+            // Calculate the decryption exponent d such that (d * e) mod phi = 1
             int d = 1;
             while (true)
             {
@@ -83,7 +101,8 @@ namespace RSA_Algorythm
             }
             return d;
         }
-        public int[] EncryptMessage(string message, int e, int n)
+
+        static int[] EncryptMessage(string message, int e, int n)
         {
             int[] encryptedMessage = new int[message.Length];
             for (int i = 0; i < message.Length; i++)
@@ -93,7 +112,7 @@ namespace RSA_Algorythm
             }
             return encryptedMessage;
         }
-        public string DecryptMessage(int[] encryptedMessage, int d, int n)
+        static string DecryptMessage(int[] encryptedMessage, int d, int n)
         {
             StringBuilder decryptedMessage = new StringBuilder();
             foreach (int c in encryptedMessage)
@@ -103,6 +122,7 @@ namespace RSA_Algorythm
             }
             return decryptedMessage.ToString();
         }
+
         static int ModPow(int baseNum, int exponent, int modulus)
         {
             // This is a simple way to calculate baseNum^exponent mod modulus

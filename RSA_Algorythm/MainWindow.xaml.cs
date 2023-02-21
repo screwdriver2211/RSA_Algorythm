@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,10 +22,9 @@ namespace RSA_Algorythm
     public partial class MainWindow : Window
     {
         RSA rsa = new();
-        //string message = "";
-        List<byte> encryptMessageBytes = new List<byte>();
-        List<byte> decryptMessageBytes = new List<byte>();
-
+        int[] encryptedMessage;
+        
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -32,12 +32,18 @@ namespace RSA_Algorythm
 
         private void EncryptButton_Click(object sender, RoutedEventArgs e)
         {
-            encryptMessageBytes = rsa.Encrypt(encryptMessage.Text);
+            encryptLabel.Content = string.Empty;
+            encryptedMessage = rsa.EncryptMessage(encryptMessage.Text, rsa.e, rsa.n);
+            foreach (var message in encryptedMessage)
+            {
+                encryptLabel.Content += message.ToString();
+            }
+            encryptMessage.Text = string.Empty;
         }
 
         private void DecryptButton_Click(object sender, RoutedEventArgs e)
         {
-            decryptMessageBytes = rsa.Decrypt(encryptMessageBytes);
-            decryptMessage.Text = Encoding.Default.GetString(encryptMessageBytes.ToArray());        }
+            decryptMessage.Text = rsa.DecryptMessage(encryptedMessage, rsa.d, rsa.n);
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RSA_Algorythm"
         mc:Ignorable="d"
-        Title="RSA" Height="250" Width="400">
+        Title="RSA" Height="350" Width="400">
     <Grid>
         <TextBox x:Name="encryptMessage" HorizontalAlignment="Left" Margin="20,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="33" FontSize="18"/>
         <Label Content="Введите ваше сообщение" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.194" Width="165"/>
@@ -19,8 +19,10 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <TextBox x:Name="decryptMessage" HorizontalAlignment="Left" Margin="215,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Height="35" FontSize="18" IsEnabled="False"/>
-        <Button x:Name="DecryptButton" Content="Расшифровать" HorizontalAlignment="Left" Margin="50,169,0,0" VerticalAlignment="Top" Height="35" Width="135" Click="DecryptButton_Click"/>
+        <TextBox x:Name="decryptMessage" HorizontalAlignment="Left" Margin="220,249,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="155" Height="35" FontSize="18" IsEnabled="False"/>
+        <Button x:Name="DecryptButton" Content="Расшифровать" HorizontalAlignment="Left" Margin="35,249,0,0" VerticalAlignment="Top" Height="35" Width="135" Click="DecryptButton_Click"/>
+        <Label x:Name="encryptLabel" Content="0" HorizontalAlignment="Left" Margin="20,167,0,0" VerticalAlignment="Top" Width="370" Height="44" FontSize="18"/>
+        <Label Content="Шифр" HorizontalAlignment="Center" Margin="0,124,0,0" VerticalAlignment="Top" FontSize="16"/>
 
     </Grid>
 </Window>
